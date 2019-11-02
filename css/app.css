@@ -28,7 +28,8 @@ html {
   background-color: white;
   color: white;
 
-  background: white url(../images/bg.jpg) 50% 50% no-repeat;
+  /*background: white url(../images/bg.jpg) 50% 50% no-repeat;*/
+  background: white url('https://cdn.glitch.com/2da6c835-67d0-4803-af44-3f4e54f7e637%2Fsquirrel_bg2.jpg?v=1572724719189') 50% 50% no-repeat;
   background-size: cover;
   height: 100%;
 }

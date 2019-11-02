@@ -37,6 +37,8 @@ url: 'https://trees.codefor.de/api/trees/closest/',
     treeId: null,
     latCT: null,
     lonCT: null,
+    heading: 0,
+    northOffset: 0,
   }
 
   // the outer part of the compass that rotates
@@ -211,7 +213,9 @@ url: 'https://trees.codefor.de/api/trees/closest/',
     // else {
     //   alert("compassHeading undefined")
     // }
-
+    heading = heading + store.northOffset
+    store.heading = heading
+    
     var orientation = getBrowserOrientation();
 
     if (typeof heading !== "undefined" && heading !== null) { // && typeof orientation !== "undefined") {
@@ -251,20 +255,6 @@ url: 'https://trees.codefor.de/api/trees/closest/',
       // var closestTree = [52.493806, 13.448278];
       var closestTree = [2.518288, 13.542091];
    
-      
-//       // Copied from Stackoverflow - cross your fingers :-)
-//       function distFrom(lat1, lng1, lat2, lng2) {
-//         let earthRadius = 6371000; //meters
-//         let dLat = Math.toRadians(lat2-lat1);
-//         let dLng = Math.toRadians(lng2-lng1);
-//         let a = Math.sin(dLat/2) * Math.sin(dLat/2) +
-//                Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2)) *
-//                Math.sin(dLng/2) * Math.sin(dLng/2);
-//         let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-//         let dist = earthRadius * c;
-
-//       return dist;
-//       }
       function distance(lat1, lon1, lat2, lon2, unit) {
           if ((lat1 == lat2) && (lon1 == lon2)) {
             return 0;
@@ -286,22 +276,6 @@ url: 'https://trees.codefor.de/api/trees/closest/',
             return dist;
           }
         }
-     /* function distFrom(lat_A, lon_A, lat_B, lon_B) {
-        let earthRadius = 6371000; //meters
-        var delta_lat = lat_B - lat_A;
-        var delta_lon = lon_B - lon_A;
-        
-        delta_lat = delta_lat * Math.PI / 180;
-        delta_lon = delta_lon * Math.PI / 180;
-
-  //      let a = Math.sin(delta_lat/2) * Math.sin(delta_lat/2) +
-    //           Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2)) *
-      //        Math.sin(dLng/2) * Math.sin(dLng/2);
-//         let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-//         let dist = earthRadius * c;
-
-//       return dist;
-       }*/
         
       function distAtoB(lat_A, lon_A, lat_B, lon_B) {
         var delta_lat = lat_B - lat_A;
@@ -496,7 +470,8 @@ url: 'https://trees.codefor.de/api/trees/closest/',
   }
 
   function openMap() {
-    window.open("https://www.google.com/maps/place/@" + positionCurrent.lat + "," + positionCurrent.lng + ",16z", "_blank");
+    // window.open("https://www.google.com/maps/place/@" + positionCurrent.lat + "," + positionCurrent.lng + ",16z", "_blank")
+    store.northOffset = store.heading
   }
 
   function popupOpenFromClick(event) {

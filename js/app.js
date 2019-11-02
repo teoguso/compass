@@ -10,6 +10,7 @@ url: 'https://trees.codefor.de/api/trees/closest/',
                         point: e.latlng.lng + ',' + e.latlng.lat
                     },
 */
+
 {var route = [ [13.37684703311472,52.48707409201542],
 [13.380610915448056,52.487211114023175],
 [13.380902435061513,52.487475359235916],
@@ -214,7 +215,7 @@ url: 'https://trees.codefor.de/api/trees/closest/',
       adjustment = adjustment + 90;
 
       // MOCK TREE POSITION
-      var closestTree = [52.493806, 13.448278];
+      // var closestTree = [52.493806, 13.448278];
       //var closestTree = [2.518288, 13.542091];
    
       
@@ -288,6 +289,11 @@ url: 'https://trees.codefor.de/api/trees/closest/',
          
       }
 
+      const closestTree = function() {
+        fetch('https://trees.codefor.de/api/trees/closest/&point=' + positionCurrent.lat + "," + positionCurrent.lon)
+        .then(response => response.json())
+        .then(data => console.log(JSON.stringify(data)))
+      }
       
       positionCurrent.hng = heading + adjustment;
       let treeAngle = angleAtoB(positionCurrent.lat, positionCurrent.lng, closestTree[0], closestTree[1]);
@@ -448,7 +454,8 @@ url: 'https://trees.codefor.de/api/trees/closest/',
   }
 
   function toggleNightmode() {
-    setNightmode(!isNightMode);
+    alert("I'm evil and misused nightmode button");
+    //setNightmode(!isNightMode);
   }
 
   function openMap() {

@@ -56,8 +56,7 @@
   // switches keeping track of our current app state
   var isOrientationLockable = false;
   var isOrientationLocked = false;
-  var isNightMode = false;
-
+  var isNightMode = false;;
 
   // the orientation of the device on app load
   var defaultOrientation;
@@ -155,10 +154,10 @@
     }
   }
 
-      // <script>
+
       var closestTree = [52.3,8.3];
       
-      function angleAtoB(lat_A, lon_A) {//, lat_B, lon_B) {
+      function angleAtoB(lat_A, lon_A, lat_B, lon_B) {
           lat_B = closestTree[0];  
           lon_B = closestTree[1];
         
@@ -168,24 +167,14 @@
           var projection = delta_lat / Math.sqrt(delta_lon*delta_lon + delta_lat*delta_lat)
           var angle = Math.acos( projection ) * 180 / 3.14159;
         
-          alert(angle);
-        
-          // apply rotation to compass needle
-          if (typeof needle.style.transform !== "undefined") {
-           // rose.style.transform = "rotateZ(" + positionCurrent.hng + "deg)";
-             needle.style.transform = "rotateZ(" + angle + "deg)";
-          } else if (typeof needle.style.webkitTransform !== "undefined") {
-            //rose.style.webkitTransform = "rotateZ(" + positionCurrent.hng + "deg)";
-            needle.style.webkitTransform = "rotateZ(" + angle + "deg)";
-         } 
+          return angle;
+         
       }
-<!--     </script> -->
-
   // called on device orientation change
   function onHeadingChange(event) {
     var heading = event.alpha;
 
-    if (typeof event.webkitCompassHeading !== "undefined") {
+        if (typeof event.webkitCompassHeading !== "undefined") {
       heading = event.webkitCompassHeading; //iOS non-standard
     }
 
@@ -222,7 +211,7 @@
         }
       }
 
-      positionCurrent.hng = heading + adjustment;
+      positionCurrent.hng = heading + adjustment; + angleAtoB(positionCurrent.lon, positionCurrent.lat, closestTree[0], closestTree[1])
 
       var phase = positionCurrent.hng < 0 ? 360 + positionCurrent.hng : positionCurrent.hng;
       positionHng.textContent = (360 - phase | 0) + "°";
@@ -464,4 +453,3 @@
   checkLockable();
 
 }());
-/

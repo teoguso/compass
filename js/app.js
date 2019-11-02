@@ -232,8 +232,8 @@
           var delta_lat = lat_B - lat_A;
           var delta_lon = lon_B - lon_A;
 
-          var projection = delta_lat / Math.sqrt(delta_lon*delta_lon + delta_lat*delta_lat)
-          var angle = Math.acos( projection ) * 180 / 3.14159;
+          var projection = delta_lat / delta_lon
+          var angle = Math.atan( projection ) * 180 / 3.14159;
         
           return angle;
          

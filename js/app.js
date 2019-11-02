@@ -169,7 +169,47 @@ url: 'https://trees.codefor.de/api/trees/closest/',
       document.msExitFullscreen();
     }
   }
+  
+  function getPromise() {
+      return new Promise(function(resolve, reject) {
+          setTimeout(function() {
+              resolve({
+                  'country': 'INDIA'
+              });
+          }, 2000)
+      })
+  }
 
+  function getResult() {
+      getPromise()
+          .then(function(response) {
+              return response;
+          })
+  }
+
+  let result = getResult();
+  console.log(result);
+
+    function getResult() {
+      return getPromise()
+          .then(function(response) {
+              return response;
+          })
+  }
+
+  getResult()
+      .then(function(result) {
+          console.log(result);
+      })
+
+  const findClosestTree = function() {
+        const jsonData = fetch('https://trees.codefor.de/api/trees/closest/&point=' + positionCurrent.lat + "," + positionCurrent.lon)
+        .then(response => response.json())
+        // .then(data => console.log(JSON.stringify(data)))
+        // .then(alert)
+        alert(jsonData)
+        return jsonData["geometry"]["coordinates"]
+      }
 
   // called on device orientation change
   function onHeadingChange(event) {
@@ -289,11 +329,6 @@ url: 'https://trees.codefor.de/api/trees/closest/',
          
       }
 
-      const closestTree = function() {
-        fetch('https://trees.codefor.de/api/trees/closest/&point=' + positionCurrent.lat + "," + positionCurrent.lon)
-        .then(response => response.json())
-        .then(data => console.log(JSON.stringify(data)))
-      }
       
       positionCurrent.hng = heading + adjustment;
       let treeAngle = angleAtoB(positionCurrent.lat, positionCurrent.lng, closestTree[0], closestTree[1]);
@@ -455,6 +490,7 @@ url: 'https://trees.codefor.de/api/trees/closest/',
 
   function toggleNightmode() {
     alert("I'm evil and misused nightmode button");
+    findClosestTree();
     //setNightmode(!isNightMode);
   }
 

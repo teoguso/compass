@@ -14,6 +14,8 @@
 
   // the outer part of the compass that rotates
   var rose = document.getElementById("rose");
+  
+  var needle = document.getElementById("needle");
 
 
   // elements that ouput our position
@@ -194,12 +196,21 @@
       var phase = positionCurrent.hng < 0 ? 360 + positionCurrent.hng : positionCurrent.hng;
       positionHng.textContent = (360 - phase | 0) + "°";
 
-
       // apply rotation to compass rose
       if (typeof rose.style.transform !== "undefined") {
-        rose.style.transform = "rotateZ(" + positionCurrent.hng + "deg)";
+       // rose.style.transform = "rotateZ(" + positionCurrent.hng + "deg)";
+         rose.style.transform = "rotateZ(" + positionCurrent.hng + "deg)";
       } else if (typeof rose.style.webkitTransform !== "undefined") {
+        //rose.style.webkitTransform = "rotateZ(" + positionCurrent.hng + "deg)";
         rose.style.webkitTransform = "rotateZ(" + positionCurrent.hng + "deg)";
+      }
+      // apply rotation to compass needle
+      if (typeof needle.style.transform !== "undefined") {
+       // rose.style.transform = "rotateZ(" + positionCurrent.hng + "deg)";
+         needle.style.transform = "rotateZ(" + positionCurrent.hng + "deg)";
+      } else if (typeof needle.style.webkitTransform !== "undefined") {
+        //rose.style.webkitTransform = "rotateZ(" + positionCurrent.hng + "deg)";
+        needle.style.webkitTransform = "rotateZ(" + positionCurrent.hng + "deg)";
       }
     } else {
       // device can't show heading

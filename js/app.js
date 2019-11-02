@@ -233,6 +233,15 @@ const treeData = [
       warningHeadingShown = true;
     }
   }
+  
+  function angleAtoB(lat_A, lon_A, lat_B, lon_B) {
+    var delta_lat = lat_B - lat_A;
+    var delta_lon = lon_B - lon_A;
+    
+    alert(delta_lat, delta_lon);
+    
+    var angle = Math.acos()
+  } 
 
   function onFullscreenChange() {
     if (isOrientationLockable && getBrowserFullscreenElement()) {

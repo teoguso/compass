@@ -214,7 +214,7 @@
       positionCurrent.hng = heading + adjustment; + angleAtoB(positionCurrent.lon, positionCurrent.lat, closestTree[0], closestTree[1])
 
       var phase = positionCurrent.hng < 0 ? 360 + positionCurrent.hng : positionCurrent.hng;
-      positionHng.textContent = (360 - phase | 0) + "°";
+      positionHng.textContent = positionCurrent.lon + " " + positionCurrent.lat; //(360 - phase | 0) + "°";
 
       // apply rotation to compass rose
       if (typeof rose.style.transform !== "undefined") {

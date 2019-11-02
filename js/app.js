@@ -4,6 +4,12 @@
   [56, 17],
   [58, 19],]*/
 
+/*
+url: 'https://trees.codefor.de/api/trees/closest/',
+                    data: {
+                        point: e.latlng.lng + ',' + e.latlng.lat
+                    },
+*/
 {var route = [ [13.37684703311472,52.48707409201542],
 [13.380610915448056,52.487211114023175],
 [13.380902435061513,52.487475359235916],
@@ -204,11 +210,12 @@
           adjustment -= 180;
         }
       }
-      adjustment
+      // compensate for some weird offset
+      adjustment = adjustment + 90;
 
       // MOCK TREE POSITION
-        //var closestTree = [52.493806, 13.448278];
-      var closestTree = [2.518288, 13.542091];
+      var closestTree = [52.493806, 13.448278];
+      //var closestTree = [2.518288, 13.542091];
    
       
 //       // Copied from Stackoverflow - cross your fingers :-)

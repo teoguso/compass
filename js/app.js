@@ -164,21 +164,6 @@
   }
 
 
-      var closestTree = [52.49385188,13.4483218];
-      
-      function angleAtoB(lat_A, lon_A, lat_B, lon_B) {
-          lat_B = closestTree[0];  
-          lon_B = closestTree[1];
-        
-          var delta_lat = lat_B - lat_A;
-          var delta_lon = lon_B - lon_A;
-
-          var projection = delta_lat / Math.sqrt(delta_lon*delta_lon + delta_lat*delta_lat)
-          var angle = Math.acos( projection ) * 180 / 3.14159;
-        
-          return angle;
-         
-      }
   // called on device orientation change
   function onHeadingChange(event) {
     var heading = event.alpha;
@@ -220,12 +205,29 @@
         }
       }
 
+      
+      var closestTree = [52.49385188,13.4483218];
+      
+      function angleAtoB(lat_A, lon_A, lat_B, lon_B) {
+        
+          var delta_lat = lat_B - lat_A;
+          var delta_lon = lon_B - lon_A;
+
+          var projection = delta_lat / Math.sqrt(delta_lon*delta_lon + delta_lat*delta_lat)
+          var angle = Math.acos( projection ) * 180 / 3.14159;
+        
+          return angle;
+         
+      }
+      
       positionCurrent.hng = heading + adjustment;
-      var nextTreeHeading = positionCurrent.hng + angleAtoB(positionCurrent.lng, positionCurrent.lat, closestTree[0], closestTree[1]);
+      let treeAngle = angleAtoB(positionCurrent.lng, positionCurrent.lat, closestTree[0], closestTree[1])
+      var nextTreeHeading = positionCurrent.hng + treeAngle;
       nextTreeHeading = nextTreeHeading < 0 ? 360 + nextTreeHeading : nextTreeHeading;
       
       var phase = positionCurrent.hng < 0 ? 360 + positionCurrent.hng : positionCurrent.hng;
-      positionHng.textContent = positionCurrent.lng +", "+ positionCurrent.lat; //(360 - phase | 0) + "°";
+      // text output for "HDG"
+      positionHng.textContent = positionCurrent.lng +", "+ positionCurrent.lat + ", " + treeAngle; //(360 - phase | 0) + "°";
 
       // apply rotation to compass rose
       if (typeof rose.style.transform !== "undefined") {
@@ -453,7 +455,7 @@
   popupContents.addEventListener("click", popupContentsClick);
 
   navigator.geolocation.watchPosition(locationUpdate, locationUpdateFail, {
-    enableHighAccuracy: false,
+    enableHighAccuracy: true,
     maximumAge: 30000,
     timeout: 27000
   });

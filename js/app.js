@@ -205,8 +205,10 @@
         }
       }
 
-      
-      var closestTree = [52.1, 13.4];
+      // MOCK TREE POSITION
+      //   var closestTree = [52.493806, 13.448278];
+      var closestTree = [52.518288, 13.442091];
+   
       
 //       // Copied from Stackoverflow - cross your fingers :-)
 //       function distFrom(lat1, lng1, lat2, lng2) {
@@ -242,7 +244,7 @@
 		return dist;
 	}
 }
-      function distFrom(lat_A, lon_A, lat_B, lon_B) {
+     /* function distFrom(lat_A, lon_A, lat_B, lon_B) {
         let earthRadius = 6371000; //meters
         var delta_lat = lat_B - lat_A;
         var delta_lon = lon_B - lon_A;
@@ -250,14 +252,14 @@
         delta_lat = delta_lat * Math.PI / 180;
         delta_lon = delta_lon * Math.PI / 180;
 
-//         let a = Math.sin(dLat/2) * Math.sin(dLat/2) +
-//                Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2)) *
-//                Math.sin(dLng/2) * Math.sin(dLng/2);
+  //      let a = Math.sin(delta_lat/2) * Math.sin(delta_lat/2) +
+    //           Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2)) *
+      //        Math.sin(dLng/2) * Math.sin(dLng/2);
 //         let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
 //         let dist = earthRadius * c;
 
 //       return dist;
-//       }
+       }*/
         
       function distAtoB(lat_A, lon_A, lat_B, lon_B) {
         var delta_lat = lat_B - lat_A;
@@ -279,16 +281,16 @@
 
       
       positionCurrent.hng = heading + adjustment;
-      let treeAngle = angleAtoB(positionCurrent.lng, positionCurrent.lat, closestTree[0], closestTree[1]);
+      let treeAngle = angleAtoB(positionCurrent.lat, positionCurrent.lng, closestTree[0], closestTree[1]);
       
-      let treeDist = distance(positionCurrent.lng, positionCurrent.lat, closestTree[0], closestTree[1], "K");
+      let treeDist = distance(positionCurrent.lat, positionCurrent.lng, closestTree[0], closestTree[1], "K");
       
       var nextTreeHeading = positionCurrent.hng + treeAngle;
       nextTreeHeading = nextTreeHeading < 0 ? 360 + nextTreeHeading : nextTreeHeading;
       
       var phase = positionCurrent.hng < 0 ? 360 + positionCurrent.hng : positionCurrent.hng;
       // text output for "HDG"
-      positionHng.textContent = Math.round(treeAngle*100000)/100000 +"°" + ", " +treeDist +" m"; //(360 - phase | 0) + "°";
+      positionHng.textContent = Math.round(treeAngle*100000)/100000 +"°" + ", " +treeDist*1000 +" m"; //(360 - phase | 0) + "°";
 
       // apply rotation to compass rose
       if (typeof rose.style.transform !== "undefined") {

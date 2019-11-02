@@ -20,7 +20,7 @@ url: 'https://trees.codefor.de/api/trees/closest/',
 [13.396807519808668,52.496590355998094],
 [13.395973890594082,52.4966161651151]]}
 
-(function () {
+(async function () {
   "use strict";
 
   //set to true for debugging output
@@ -182,23 +182,25 @@ url: 'https://trees.codefor.de/api/trees/closest/',
         return jsonData["geometry"]["coordinates"]
       }
   
-  function ajax() {
-    alert("trying for "+'https://trees.codefor.de/api/trees/closest/?point=' + positionCurrent.lat + "," + positionCurrent.lng);  
-    fetch('https://trees.codefor.de/api/trees/closest/?point=' + positionCurrent.lng + "," + positionCurrent.lat)
-    .then(function(response) {
-       if (response.ok)
-          return response.json();
-       else
-          throw new Error('konnte nicht geladen werden');
-    })
-    .then(function(json) {
-       // Hier Code zum einarbeiten der Kurse in die Anzeige
-        alert( JSON.stringify(json));
-    })
-    .catch(function(err) {
-       // Hier Fehlerbehandlung
-        alert(err);
-    });
+  async function ajax() {
+    alert("trying for "+'https://trees.codefor.de/api/trees/closest/?point=' + positionCurrent.lng + "," + positionCurrent.lat);  
+    const response = await fetch('https://trees.codefor.de/api/trees/closest/?point=' + positionCurrent.lng + "," + positionCurrent.lat)
+    // .then(function(response) {
+    if (!response.ok) {
+      throw new Error('konnte nicht geladen werden');
+    }
+//     .then(function(json) {
+//        // Hier Code zum einarbeiten der Kurse in die Anzeige
+      
+//         alert( JSON.stringify(json["geometry"]["coordinates"]));
+//     })
+//     .catch(function(err) {
+//        // Hier Fehlerbehandlung
+//         alert(err);
+//     })
+    alert("ASDASD")
+    const [lonCT, latCT] = response.json()["geometry"]["coordinates"]
+    return [lonCT, latCT]
   }
 
   // called on device orientation change
@@ -478,9 +480,9 @@ url: 'https://trees.codefor.de/api/trees/closest/',
     isNightMode = on;
   }
 
-  function toggleNightmode() {
+  async function toggleNightmode() {
    //findClosestTree();
-    ajax();
+    alert(await ajax());
     //setNightmode(!isNightMode);
   }
 

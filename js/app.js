@@ -11,20 +11,20 @@ url: 'https://trees.codefor.de/api/trees/closest/',
                     },
 */
 
-{var route = [ [13.37684703311472,52.48707409201542],
+/*{var route = [ [13.37684703311472,52.48707409201542],
 [13.380610915448056,52.487211114023175],
 [13.380902435061513,52.487475359235916],
 [13.380345598900224,52.487158107684756],
 [13.37978875920448,52.48712176355076],
 [13.39607125067393,52.49660967276511],
 [13.396807519808668,52.496590355998094],
-[13.395973890594082,52.4966161651151]]}
+[13.395973890594082,52.4966161651151]]}*/
 
 (async function () {
   "use strict";
 
   //set to true for debugging output
-  var debug = true;
+  var debug = false;
 
   // our current position
   var positionCurrent = {
@@ -34,6 +34,7 @@ url: 'https://trees.codefor.de/api/trees/closest/',
   };
 
   const store = {
+    treeId: null,
     latCT: null,
     lonCT: null,
   }
@@ -175,7 +176,7 @@ url: 'https://trees.codefor.de/api/trees/closest/',
   }
   
   async function findClosestTree() {
-    alert("trying for "+'https://trees.codefor.de/api/trees/closest/?point=' + positionCurrent.lng + "," + positionCurrent.lat);  
+    // alert("trying for "+'https://trees.codefor.de/api/trees/closest/?point=' + positionCurrent.lng + "," + positionCurrent.lat);  
     const response = await fetch('https://trees.codefor.de/api/trees/closest/?point=' + positionCurrent.lng + "," + positionCurrent.lat)
     // .then(function(response) {
     if (!response.ok) {
@@ -193,9 +194,10 @@ url: 'https://trees.codefor.de/api/trees/closest/',
     // alert(await response.json())
     const jdata = await response.json()
     // alert(jdata)
+    const treeId = jdata.id
     const [lonCT, latCT] = jdata.geometry.coordinates  // ["geometry"]["coordinates"]
     // alert(lonCT)
-    return [lonCT, latCT]
+    return [treeId, lonCT, latCT]
   }
 
   // called on device orientation change
@@ -319,6 +321,11 @@ url: 'https://trees.codefor.de/api/trees/closest/',
       
       positionCurrent.hng = heading + adjustment;
       
+      if ((store.latCT === null) || (store.lonCT === null)) {
+        store.latCT = positionCurrent.lat
+        store.lonCT = positionCurrent.lng
+      }
+      
       let treeAngle = angleAtoB(positionCurrent.lat, positionCurrent.lng, store.latCT, store.lonCT);
       
       let treeDist = distance(positionCurrent.lat, positionCurrent.lng, store.latCT, store.lonCT, "K");
@@ -328,7 +335,7 @@ url: 'https://trees.codefor.de/api/trees/closest/',
       
       var phase = positionCurrent.hng < 0 ? 360 + positionCurrent.hng : positionCurrent.hng;
       // text output for "HDG"
-      positionHng.textContent = "ajd" + adjustment +", "+ Math.round(treeAngle*100000)/100000 +"°" + ", " +treeDist*1000 +" m"; //(360 - phase | 0) + "°";
+      positionHng.textContent = store.treeId + ", " + store.latCT  + ", " +Math.round(treeAngle*100000)/100000 +"°" + ", " + Math.round(treeDist*1000 * 100)/100 +" m"; //(360 - phase | 0) + "°";
 
       // apply rotation to compass rose
       if (typeof rose.style.transform !== "undefined") {
@@ -478,8 +485,9 @@ url: 'https://trees.codefor.de/api/trees/closest/',
 
   async function toggleNightmode() {
     const newTree = await findClosestTree();
-    store.lonCT = newTree[0]
-    store.latCT = newTree[1]
+    store.treeId = newTree[0]
+    store.lonCT = newTree[1]
+    store.latCT = newTree[2]
     //setNightmode(!isNightMode);
   }
 

@@ -206,7 +206,7 @@ url: 'https://trees.codefor.de/api/trees/closest/',
     var heading = event.alpha;
 
         if (typeof event.webkitCompassHeading !== "undefined") {
-      heading = event.webkitCompassHeading; //iOS non-standard
+      heading = event.alpha + event.webkitCompassHeading; //iOS non-standard
     }
 
     var orientation = getBrowserOrientation();

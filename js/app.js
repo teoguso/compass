@@ -17,7 +17,7 @@
   "use strict";
 
   //set to true for debugging output
-  var debug = false;
+  var debug = true;
 
   // our current position
   var positionCurrent = {
@@ -204,6 +204,7 @@
           adjustment -= 180;
         }
       }
+      adjustment
 
       // MOCK TREE POSITION
         //var closestTree = [52.493806, 13.448278];
@@ -272,9 +273,9 @@
           var delta_lat = lat_B - lat_A;
           var delta_lon = lon_B - lon_A;
 
-          var projection = delta_lon / delta_lat
-          let angularCoeff = 
-          var angle = Math.atan( projection ) * 180 / Math.PI;
+          // var projection = delta_lon / delta_lat
+          let angularCoeff = delta_lat / Math.sqrt( delta_lat * delta_lat + delta_lon * delta_lon )
+          var angle = Math.acos( angularCoeff ) * 180 / Math.PI;
         
           return angle;
          
@@ -291,7 +292,7 @@
       
       var phase = positionCurrent.hng < 0 ? 360 + positionCurrent.hng : positionCurrent.hng;
       // text output for "HDG"
-      positionHng.textContent = Math.round(treeAngle*100000)/100000 +"°" + ", " +treeDist*1000 +" m"; //(360 - phase | 0) + "°";
+      positionHng.textContent = "ajd" + adjustment +", "+ Math.round(treeAngle*100000)/100000 +"°" + ", " +treeDist*1000 +" m"; //(360 - phase | 0) + "°";
 
       // apply rotation to compass rose
       if (typeof rose.style.transform !== "undefined") {

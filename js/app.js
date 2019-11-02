@@ -2,8 +2,7 @@
   [53, 14],
   [55, 16],
   [56, 17],
-  [58, 19],
-]*/
+  [58, 19],]*/
 
 (function () {
   "use strict";
@@ -156,6 +155,31 @@
     }
   }
 
+      // <script>
+      var closestTree = [52.3,8.3];
+      
+      function angleAtoB(lat_A, lon_A) {//, lat_B, lon_B) {
+          lat_B = closestTree[0];  
+          lon_B = closestTree[1];
+        
+          var delta_lat = lat_B - lat_A;
+          var delta_lon = lon_B - lon_A;
+
+          var projection = delta_lat / Math.sqrt(delta_lon*delta_lon + delta_lat*delta_lat)
+          var angle = Math.acos( projection ) * 180 / 3.14159;
+        
+          alert(angle);
+        
+          // apply rotation to compass needle
+          if (typeof needle.style.transform !== "undefined") {
+           // rose.style.transform = "rotateZ(" + positionCurrent.hng + "deg)";
+             needle.style.transform = "rotateZ(" + angle + "deg)";
+          } else if (typeof needle.style.webkitTransform !== "undefined") {
+            //rose.style.webkitTransform = "rotateZ(" + positionCurrent.hng + "deg)";
+            needle.style.webkitTransform = "rotateZ(" + angle + "deg)";
+         } 
+      }
+<!--     </script> -->
 
   // called on device orientation change
   function onHeadingChange(event) {
@@ -234,17 +258,6 @@
     }
   }
   
-  function angleAtoB(lat_A, lon_A, lat_B, lon_B) {
-    var delta_lat = lat_B - lat_A;
-    var delta_lon = lon_B - lon_A;
-    
-    alert(delta_lat, delta_lon);
-    
-    var projection = delta_lat / Math.sqrt(delta_lon*delta_lon + delta_lat*delta_lat)
-    var angle = Math.acos( projection );
-    alert(angle);
-  } 
-
   function onFullscreenChange() {
     if (isOrientationLockable && getBrowserFullscreenElement()) {
       if (screen.orientation && screen.orientation.lock) {
@@ -451,3 +464,4 @@
   checkLockable();
 
 }());
+/

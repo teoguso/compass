@@ -35,19 +35,8 @@
 
 
   <div class="container">
-    <script>
-      function angleAtoB(lat_A, lon_A, lat_B, lon_B) {
-          var delta_lat = lat_B - lat_A;
-          var delta_lon = lon_B - lon_A;
 
-          var projection = delta_lat / Math.sqrt(delta_lon*delta_lon + delta_lat*delta_lat)
-          var angle = Math.acos( projection ) * 180 / 3.14159;
-        
-          alert(angle);
-       } 
-    </script>
-
-   <a href="javascript:angleAtoB(52.3,8.1,52.3,8.3)">click me</a>
+<!--    <a href="javascript:angleAtoB(52.3,8.1)">click me</a> -->
 
     <div class="compass">
 

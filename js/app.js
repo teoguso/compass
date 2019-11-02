@@ -319,9 +319,9 @@ url: 'https://trees.codefor.de/api/trees/closest/',
       
       positionCurrent.hng = heading + adjustment;
       
-      let treeAngle = angleAtoB(positionCurrent.lat, positionCurrent.lng, closestTree[0], closestTree[1]);
+      let treeAngle = angleAtoB(positionCurrent.lat, positionCurrent.lng, store.latCT, store.lonCT);
       
-      let treeDist = distance(positionCurrent.lat, positionCurrent.lng, closestTree[0], closestTree[1], "K");
+      let treeDist = distance(positionCurrent.lat, positionCurrent.lng, store.latCT, store.lonCT, "K");
       
       var nextTreeHeading = positionCurrent.hng + treeAngle;
       nextTreeHeading = nextTreeHeading < 0 ? 360 + nextTreeHeading : nextTreeHeading;
@@ -477,8 +477,9 @@ url: 'https://trees.codefor.de/api/trees/closest/',
   }
 
   async function toggleNightmode() {
-    const newTree = 
-    await findClosestTree();
+    const newTree = await findClosestTree();
+    store.lonCT = newTree[0]
+    store.latCT = newTree[1]
     //setNightmode(!isNightMode);
   }
 

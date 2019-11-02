@@ -194,8 +194,9 @@ url: 'https://trees.codefor.de/api/trees/closest/',
     // alert(await response.json())
     const jdata = await response.json()
     // alert(jdata)
-    const treeId = jdata.id
+    //const treeId = jdata.id
     const [lonCT, latCT] = jdata.geometry.coordinates  // ["geometry"]["coordinates"]
+    const treeId = jdata.properties.location_number
     // alert(lonCT)
     return [treeId, lonCT, latCT]
   }

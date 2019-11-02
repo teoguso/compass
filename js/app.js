@@ -206,20 +206,25 @@
       }
 
       
-      var closestTree = [52.4937957, 13.4482738];
+      var closestTree = [52.4931957, 13.4492738];
       
-      // Copied from Stackoverflow - cross your fingers :-)
-      function distFrom(lat1, lng1, lat2, lng2) {
-        let earthRadius = 6371000; //meters
-        let dLat = Math.toRadians(lat2-lat1);
-        let dLng = Math.toRadians(lng2-lng1);
-        let a = Math.sin(dLat/2) * Math.sin(dLat/2) +
-               Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2)) *
-               Math.sin(dLng/2) * Math.sin(dLng/2);
-        let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-        let dist = earthRadius * c;
+//       // Copied from Stackoverflow - cross your fingers :-)
+//       function distFrom(lat1, lng1, lat2, lng2) {
+//         let earthRadius = 6371000; //meters
+//         let dLat = Math.toRadians(lat2-lat1);
+//         let dLng = Math.toRadians(lng2-lng1);
+//         let a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+//                Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2)) *
+//                Math.sin(dLng/2) * Math.sin(dLng/2);
+//         let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+//         let dist = earthRadius * c;
 
-      return dist;
+//       return dist;
+//       }
+      function distAtoB(lat_A, lon_A, lat_B, lon_B) {
+        var delta_lat = lat_B - lat_A;
+        var delta_lon = lon_B - lon_A;
+        return Math.sqrt(delta_lon*delta_lon + delta_lat*delta_lat)
       }
       
       function angleAtoB(lat_A, lon_A, lat_B, lon_B) {
@@ -236,16 +241,16 @@
 
       
       positionCurrent.hng = heading + adjustment;
-      let treeAngle = angleAtoB(positionCurrent.lng, positionCurrent.lat, closestTree[0], closestTree[1])
+      let treeAngle = angleAtoB(positionCurrent.lng, positionCurrent.lat, closestTree[0], closestTree[1]);
       
-      let treeDist = distFrom(positionCurrent.lng, positionCurrent.lat, closestTree[0], closestTree[1])
+      let treeDist = distAtoB(positionCurrent.lng, positionCurrent.lat, closestTree[0], closestTree[1]);
       
       var nextTreeHeading = positionCurrent.hng + treeAngle;
       nextTreeHeading = nextTreeHeading < 0 ? 360 + nextTreeHeading : nextTreeHeading;
       
       var phase = positionCurrent.hng < 0 ? 360 + positionCurrent.hng : positionCurrent.hng;
       // text output for "HDG"
-      positionHng.textContent = positionCurrent.lng +", "+ positionCurrent.lat + ", " + Math.round(treeAngle*100000)/100000 +"°" + ", " +treeDist +" m"; //(360 - phase | 0) + "°";
+      positionHng.textContent = Math.round(treeAngle*100000)/100000 +"°" + ", " +treeDist +" m"; //(360 - phase | 0) + "°";
 
       // apply rotation to compass rose
       if (typeof rose.style.transform !== "undefined") {

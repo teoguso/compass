@@ -170,46 +170,34 @@ url: 'https://trees.codefor.de/api/trees/closest/',
     }
   }
   
-  function getPromise() {
-      return new Promise(function(resolve, reject) {
-          setTimeout(function() {
-              resolve({
-                  'country': 'INDIA'
-              });
-          }, 2000)
-      })
-  }
-
-  function getResult() {
-      getPromise()
-          .then(function(response) {
-              return response;
-          })
-  }
-
-  let result = getResult();
-  console.log(result);
-
-    function getResult() {
-      return getPromise()
-          .then(function(response) {
-              return response;
-          })
-  }
-
-  getResult()
-      .then(function(result) {
-          console.log(result);
-      })
-
   const findClosestTree = function() {
         const jsonData = fetch('https://trees.codefor.de/api/trees/closest/&point=' + positionCurrent.lat + "," + positionCurrent.lon)
         .then(response => response.json())
         // .then(data => console.log(JSON.stringify(data)))
         // .then(alert)
-        alert(jsonData)
+        .then(function (jdata) {
+           alert(jdata)
+        })
+              
         return jsonData["geometry"]["coordinates"]
       }
+  
+  function ajax() {
+      fetch('https://trees.codefor.de/api/trees/closest/&point=' + positionCurrent.lat + "," + positionCurrent.lon)
+    .then(function(response) {
+       if (response.ok)
+          return response.json();
+       else
+          throw new Error('Kurse konnten nicht geladen werden');
+    })
+    .then(function(json) {
+       // Hier Code zum einarbeiten der Kurse in die Anzeige
+    })
+    .catch(function(err) {
+       // Hier Fehlerbehandlung
+        
+    });
+  }
 
   // called on device orientation change
   function onHeadingChange(event) {

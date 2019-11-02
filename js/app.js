@@ -206,8 +206,8 @@
       }
 
       // MOCK TREE POSITION
-      //   var closestTree = [52.493806, 13.448278];
-      var closestTree = [52.518288, 13.442091];
+        var closestTree = [52.493806, 13.448278];
+      // var closestTree = [52.518288, 13.542091];
    
       
 //       // Copied from Stackoverflow - cross your fingers :-)
@@ -224,26 +224,26 @@
 //       return dist;
 //       }
       function distance(lat1, lon1, lat2, lon2, unit) {
-	if ((lat1 == lat2) && (lon1 == lon2)) {
-		return 0;
-	}
-	else {
-		var radlat1 = Math.PI * lat1/180;
-		var radlat2 = Math.PI * lat2/180;
-		var theta = lon1-lon2;
-		var radtheta = Math.PI * theta/180;
-		var dist = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
-		if (dist > 1) {
-			dist = 1;
-		}
-		dist = Math.acos(dist);
-		dist = dist * 180/Math.PI;
-		dist = dist * 60 * 1.1515;
-		if (unit=="K") { dist = dist * 1.609344 }
-		if (unit=="N") { dist = dist * 0.8684 }
-		return dist;
-	}
-}
+          if ((lat1 == lat2) && (lon1 == lon2)) {
+            return 0;
+          }
+          else {
+            var radlat1 = Math.PI * lat1/180;
+            var radlat2 = Math.PI * lat2/180;
+            var theta = lon1-lon2;
+            var radtheta = Math.PI * theta/180;
+            var dist = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
+            if (dist > 1) {
+              dist = 1;
+            }
+            dist = Math.acos(dist);
+            dist = dist * 180/Math.PI;
+            dist = dist * 60 * 1.1515;
+            if (unit=="K") { dist = dist * 1.609344 }
+            if (unit=="N") { dist = dist * 0.8684 }
+            return dist;
+          }
+        }
      /* function distFrom(lat_A, lon_A, lat_B, lon_B) {
         let earthRadius = 6371000; //meters
         var delta_lat = lat_B - lat_A;
@@ -272,8 +272,8 @@
           var delta_lat = lat_B - lat_A;
           var delta_lon = lon_B - lon_A;
 
-          var projection = delta_lat / delta_lon
-          var angle = Math.atan( projection ) * 180 / 3.14159;
+          var projection = delta_lon / delta_lat
+          var angle = Math.atan( projection ) * 180 / Math.PI;
         
           return angle;
          

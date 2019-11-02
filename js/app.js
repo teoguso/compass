@@ -1,8 +1,8 @@
 const treeData = [
-  [3, 4],
-  [5, 6],
-  [6, 7],
-  [8, 9],
+  [53, 14],
+  [55, 16],
+  [56, 17],
+  [58, 19],
 ]
 
 (function () {
@@ -240,7 +240,9 @@ const treeData = [
     
     alert(delta_lat, delta_lon);
     
-    var angle = Math.acos()
+    var projection = delta_lat / Math.sqrt(delta_lon*delta_lon + delta_lat*delta_lat)
+    var angle = Math.acos( projection );
+    alert(angle);
   } 
 
   function onFullscreenChange() {

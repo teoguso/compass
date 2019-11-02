@@ -204,10 +204,13 @@ url: 'https://trees.codefor.de/api/trees/closest/',
   // called on device orientation change
   function onHeadingChange(event) {
     var heading = event.alpha;
-
-        if (typeof event.webkitCompassHeading !== "undefined") {
+    
+    if (typeof event.webkitCompassHeading !== "undefined") {
       heading = event.alpha + event.webkitCompassHeading; //iOS non-standard
     }
+    // else {
+    //   alert("compassHeading undefined")
+    // }
 
     var orientation = getBrowserOrientation();
 
@@ -242,7 +245,7 @@ url: 'https://trees.codefor.de/api/trees/closest/',
         }
       }
       // compensate for some weird offset
-      adjustment = adjustment + 90;
+      //adjustment = adjustment + 90;
 
       // MOCK TREE POSITION
       // var closestTree = [52.493806, 13.448278];
@@ -313,7 +316,7 @@ url: 'https://trees.codefor.de/api/trees/closest/',
 
           // var projection = delta_lon / delta_lat
           let angularCoeff = delta_lat / Math.sqrt( delta_lat * delta_lat + delta_lon * delta_lon )
-          var angle = Math.acos( angularCoeff ) * 180 / Math.PI;
+          var angle = - Math.acos( angularCoeff ) * 180 / Math.PI;
         
           return angle;
          

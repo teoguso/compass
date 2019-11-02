@@ -206,8 +206,8 @@
       }
 
       // MOCK TREE POSITION
-        var closestTree = [52.493806, 13.448278];
-      // var closestTree = [52.518288, 13.542091];
+        //var closestTree = [52.493806, 13.448278];
+      var closestTree = [2.518288, 13.542091];
    
       
 //       // Copied from Stackoverflow - cross your fingers :-)
@@ -273,6 +273,7 @@
           var delta_lon = lon_B - lon_A;
 
           var projection = delta_lon / delta_lat
+          let angularCoeff = 
           var angle = Math.atan( projection ) * 180 / Math.PI;
         
           return angle;

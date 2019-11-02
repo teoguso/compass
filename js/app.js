@@ -164,7 +164,7 @@
   }
 
 
-      var closestTree = [52.3,8.3];
+      var closestTree = [52.49385188,13.4483218];
       
       function angleAtoB(lat_A, lon_A, lat_B, lon_B) {
           lat_B = closestTree[0];  
@@ -220,25 +220,26 @@
         }
       }
 
-      positionCurrent.hng = heading + adjustment + angleAtoB(positionCurrent.lng, positionCurrent.lat, closestTree[0], closestTree[1]);
-
+      positionCurrent.hng = heading + adjustment;
+      var nextTreeHeading = positionCurrent.hng + angleAtoB(positionCurrent.lng, positionCurrent.lat, closestTree[0], closestTree[1]);
+      nextTreeHeading = nextTreeHeading < 0 ? 360 + nextTreeHeading : nextTreeHeading;
+      
       var phase = positionCurrent.hng < 0 ? 360 + positionCurrent.hng : positionCurrent.hng;
-      positionHng.textContent = (360 - phase | 0) + "°";
+      positionHng.textContent = positionCurrent.lng +", "+ positionCurrent.lat; //(360 - phase | 0) + "°";
 
       // apply rotation to compass rose
       if (typeof rose.style.transform !== "undefined") {
-       // rose.style.transform = "rotateZ(" + positionCurrent.hng + "deg)";
-  
+       rose.style.transform = "rotateZ(" + positionCurrent.hng + "deg)";  
       } else if (typeof rose.style.webkitTransform !== "undefined") {
-        //rose.style.webkitTransform = "rotateZ(" + positionCurrent.hng + "deg)";
+        rose.style.webkitTransform = "rotateZ(" + positionCurrent.hng + "deg)";
       }
       // apply rotation to compass needle
       if (typeof needle.style.transform !== "undefined") {
        // rose.style.transform = "rotateZ(" + positionCurrent.hng + "deg)";
-         needle.style.transform = "rotateZ(" + positionCurrent.hng + "deg)";
+         needle.style.transform = "rotateZ(" + nextTreeHeading + "deg)";
       } else if (typeof needle.style.webkitTransform !== "undefined") {
         //rose.style.webkitTransform = "rotateZ(" + positionCurrent.hng + "deg)";
-        needle.style.webkitTransform = "rotateZ(" + positionCurrent.hng + "deg)";
+        needle.style.webkitTransform = "rotateZ(" + nextTreeHeading + "deg)";
       }
     } else {
       // device can't show heading

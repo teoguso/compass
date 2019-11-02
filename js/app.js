@@ -4,6 +4,15 @@
   [56, 17],
   [58, 19],]*/
 
+{var route = [ [13.37684703311472,52.48707409201542],
+[13.380610915448056,52.487211114023175],
+[13.380902435061513,52.487475359235916],
+[13.380345598900224,52.487158107684756],
+[13.37978875920448,52.48712176355076],
+[13.39607125067393,52.49660967276511],
+[13.396807519808668,52.496590355998094],
+[13.395973890594082,52.4966161651151]]}
+
 (function () {
   "use strict";
 
@@ -211,18 +220,17 @@
         }
       }
 
-      positionCurrent.hng = heading + adjustment; + angleAtoB(positionCurrent.lon, positionCurrent.lat, closestTree[0], closestTree[1])
+      positionCurrent.hng = heading + adjustment + angleAtoB(positionCurrent.lng, positionCurrent.lat, closestTree[0], closestTree[1]);
 
       var phase = positionCurrent.hng < 0 ? 360 + positionCurrent.hng : positionCurrent.hng;
-      positionHng.textContent = positionCurrent.lon + " " + positionCurrent.lat; //(360 - phase | 0) + "°";
+      positionHng.textContent = (360 - phase | 0) + "°";
 
       // apply rotation to compass rose
       if (typeof rose.style.transform !== "undefined") {
        // rose.style.transform = "rotateZ(" + positionCurrent.hng + "deg)";
-         rose.style.transform = "rotateZ(" + positionCurrent.hng + "deg)";
+  
       } else if (typeof rose.style.webkitTransform !== "undefined") {
         //rose.style.webkitTransform = "rotateZ(" + positionCurrent.hng + "deg)";
-        rose.style.webkitTransform = "rotateZ(" + positionCurrent.hng + "deg)";
       }
       // apply rotation to compass needle
       if (typeof needle.style.transform !== "undefined") {

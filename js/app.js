@@ -183,19 +183,21 @@ url: 'https://trees.codefor.de/api/trees/closest/',
       }
   
   function ajax() {
-      fetch('https://trees.codefor.de/api/trees/closest/&point=' + positionCurrent.lat + "," + positionCurrent.lon)
+    alert("trying for "+'https://trees.codefor.de/api/trees/closest/?point=' + positionCurrent.lat + "," + positionCurrent.lng);  
+    fetch('https://trees.codefor.de/api/trees/closest/?point=' + positionCurrent.lng + "," + positionCurrent.lat)
     .then(function(response) {
        if (response.ok)
           return response.json();
        else
-          throw new Error('Kurse konnten nicht geladen werden');
+          throw new Error('konnte nicht geladen werden');
     })
     .then(function(json) {
        // Hier Code zum einarbeiten der Kurse in die Anzeige
+        alert( JSON.stringify(json));
     })
     .catch(function(err) {
        // Hier Fehlerbehandlung
-        
+        alert(err);
     });
   }
 
@@ -477,8 +479,8 @@ url: 'https://trees.codefor.de/api/trees/closest/',
   }
 
   function toggleNightmode() {
-    alert("I'm evil and misused nightmode button");
-    findClosestTree();
+   //findClosestTree();
+    ajax();
     //setNightmode(!isNightMode);
   }
 

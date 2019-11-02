@@ -30,9 +30,13 @@ url: 'https://trees.codefor.de/api/trees/closest/',
   var positionCurrent = {
     lat: null,
     lng: null,
-    hng: null
+    hng: null,
   };
 
+  const store = {
+    latCT: null,
+    lonCT: null,
+  }
 
   // the outer part of the compass that rotates
   var rose = document.getElementById("rose");
@@ -170,19 +174,7 @@ url: 'https://trees.codefor.de/api/trees/closest/',
     }
   }
   
-  const findClosestTree = function() {
-        const jsonData = fetch('https://trees.codefor.de/api/trees/closest/&point=' + positionCurrent.lat + "," + positionCurrent.lon)
-        .then(response => response.json())
-        // .then(data => console.log(JSON.stringify(data)))
-        // .then(alert)
-        .then(function (jdata) {
-           alert(jdata)
-        })
-              
-        return jsonData["geometry"]["coordinates"]
-      }
-  
-  async function ajax() {
+  async function findClosestTree() {
     alert("trying for "+'https://trees.codefor.de/api/trees/closest/?point=' + positionCurrent.lng + "," + positionCurrent.lat);  
     const response = await fetch('https://trees.codefor.de/api/trees/closest/?point=' + positionCurrent.lng + "," + positionCurrent.lat)
     // .then(function(response) {
@@ -198,8 +190,11 @@ url: 'https://trees.codefor.de/api/trees/closest/',
 //        // Hier Fehlerbehandlung
 //         alert(err);
 //     })
-    alert("ASDASD")
-    const [lonCT, latCT] = response.json()["geometry"]["coordinates"]
+    // alert(await response.json())
+    const jdata = await response.json()
+    // alert(jdata)
+    const [lonCT, latCT] = jdata.geometry.coordinates  // ["geometry"]["coordinates"]
+    // alert(lonCT)
     return [lonCT, latCT]
   }
 
@@ -248,7 +243,7 @@ url: 'https://trees.codefor.de/api/trees/closest/',
 
       // MOCK TREE POSITION
       // var closestTree = [52.493806, 13.448278];
-      //var closestTree = [2.518288, 13.542091];
+      var closestTree = [2.518288, 13.542091];
    
       
 //       // Copied from Stackoverflow - cross your fingers :-)
@@ -323,6 +318,7 @@ url: 'https://trees.codefor.de/api/trees/closest/',
 
       
       positionCurrent.hng = heading + adjustment;
+      
       let treeAngle = angleAtoB(positionCurrent.lat, positionCurrent.lng, closestTree[0], closestTree[1]);
       
       let treeDist = distance(positionCurrent.lat, positionCurrent.lng, closestTree[0], closestTree[1], "K");
@@ -481,8 +477,8 @@ url: 'https://trees.codefor.de/api/trees/closest/',
   }
 
   async function toggleNightmode() {
-   //findClosestTree();
-    alert(await ajax());
+    const newTree = 
+    await findClosestTree();
     //setNightmode(!isNightMode);
   }
 

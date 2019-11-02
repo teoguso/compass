@@ -213,8 +213,8 @@ url: 'https://trees.codefor.de/api/trees/closest/',
     // else {
     //   alert("compassHeading undefined")
     // }
-    heading = heading + store.northOffset
     store.heading = heading
+    heading = heading + store.northOffset
     
     var orientation = getBrowserOrientation();
 
@@ -313,7 +313,7 @@ url: 'https://trees.codefor.de/api/trees/closest/',
       
       var phase = positionCurrent.hng < 0 ? 360 + positionCurrent.hng : positionCurrent.hng;
       // text output for "HDG"
-      positionHng.textContent = store.treeId + ", " + store.latCT  + ", " +Math.round(treeAngle*100000)/100000 +"°" + ", " + Math.round(treeDist*1000 * 100)/100 +" m"; //(360 - phase | 0) + "°";
+      positionHng.textContent = Math.round(treeDist*1000 * 100)/100 +" m";//store.treeId + ", " + store.latCT  + ", " +Math.round(treeAngle*100000)/100000 +"°" + ", " + Math.round(treeDist*1000 * 100)/100 +" m"; //(360 - phase | 0) + "°";
 
       // apply rotation to compass rose
       if (typeof rose.style.transform !== "undefined") {
@@ -471,7 +471,7 @@ url: 'https://trees.codefor.de/api/trees/closest/',
 
   function openMap() {
     // window.open("https://www.google.com/maps/place/@" + positionCurrent.lat + "," + positionCurrent.lng + ",16z", "_blank")
-    store.northOffset = store.heading
+    store.northOffset = - store.heading
   }
 
   function popupOpenFromClick(event) {

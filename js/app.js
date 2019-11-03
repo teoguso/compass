@@ -488,8 +488,8 @@ url: 'https://trees.codefor.de/api/trees/closest/',
         //  every time this function is called
         var move = 1 / 60 / 100; // 1 angle minute equals 1852 m
 
-        store.currentLat = store.currentLat + move;
-        store.currentLon = store.currentLon - move;  // going westwards means subtracting on eastern hemisphere
+        store.currentLat = store.currentLat + move * Math.cos(store.heading);
+        store.currentLon = store.currentLon - move * Math.sin(store.heading);  // going westwards means subtracting on eastern hemisphere
       
         //Now find new tree from these coordinates
         const newTree = await findClosestTree(store.currentLat, store.currentLon);

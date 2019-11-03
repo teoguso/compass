@@ -318,7 +318,8 @@ url: 'https://trees.codefor.de/api/trees/closest/',
       
       var phase = positionCurrent.hng < 0 ? 360 + positionCurrent.hng : positionCurrent.hng;
       // text output for "HDG"
-      positionHng.textContent = Math.round(treeDist*1000 * 100)/100 +" m";//store.treeId + ", " + store.latCT  + ", " +Math.round(treeAngle*100000)/100000 +"°" + ", " + Math.round(treeDist*1000 * 100)/100 +" m"; //(360 - phase | 0) + "°";
+      positionHng.textContent = Math.round(treeDist*1000 * 100)/100 +" m"+ ", " + store.currentLat + ", " + store.currentLon;
+      //store.treeId + ", " + store.latCT  + ", " +Math.round(treeAngle*100000)/100000 +"°" + ", " + Math.round(treeDist*1000 * 100)/100 +" m"; //(360 - phase | 0) + "°";
 
       // apply rotation to compass rose
       if (typeof rose.style.transform !== "undefined") {
@@ -466,14 +467,24 @@ url: 'https://trees.codefor.de/api/trees/closest/',
     isNightMode = on;
   }
 
-  async function toggleNightmode() {
+  // find nearest tree in a route
+  async function startRoute() {
     if(demo) {
       // set current position ot useres GPS coordinates at beginning
       if ((store.currentLat === null) || (store.currentLon === null)) {
         store.currentLat = positionCurrent.lat;
         store.currentLon = positionCurrent.lon;
       }
-      // now move by 
+      // now move position by 18.5 meters North-West every time this function is called
+      var move = 1 / 60 / 100 / 2; // 1 angle minute equals 1852 m
+      store.currentLat += move;
+      store.currentLat -= move;  // going westwards means subtracting on eastern hemisphere
+      
+      //Now find new tree from these coordinates
+      const newTree = await findClosestTree(store.currentLat, store.currentLon);
+      store.treeId = newTree[0]
+      store.lonCT = newTree[1]
+      store.latCT = newTree[2]
     }
     else {
       const newTree = await findClosestTree(positionCurrent.lat, positionCurrent.lng);
@@ -549,7 +560,7 @@ url: 'https://trees.codefor.de/api/trees/closest/',
   document.addEventListener("MSFullscreenChange", onFullscreenChange);
 
   btnLockOrientation.addEventListener("click", toggleOrientationLock);
-  btnNightmode.addEventListener("click", toggleNightmode);
+  btnNightmode.addEventListener("click", startRoute);
   btnMap.addEventListener("click", openMap);
 
   var i;

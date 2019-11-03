@@ -27,7 +27,7 @@ url: 'https://trees.codefor.de/api/trees/closest/',
   var debug = false;
   
   //set true for presentation mode
-  var demo = false;
+  var demo = true;
 
   // our current position
   var positionCurrent = {
@@ -326,7 +326,12 @@ url: 'https://trees.codefor.de/api/trees/closest/',
       
       var phase = positionCurrent.hng < 0 ? 360 + positionCurrent.hng : positionCurrent.hng;
       // text output for "HDG"
-      positionHng.textContent = store.species + ", " + Math.round(treeDist*1000 * 100)/100 +" m"+ ", " + store.currentLat + ", " + store.currentLon;
+      if(demo) {
+        positionHng.textContent = store.species + ", " + Math.round(treeDist*1000 * 100)/100 +" m"+ ", " + store.currentLat + ", " + store.currentLon;
+      }
+      else {
+        positionHng.textContent = store.species + ", " + Math.round(treeDist*1000 * 100)/100 +" m";
+      }
       //store.treeId + ", " + store.latCT  + ", " +Math.round(treeAngle*100000)/100000 +"°" + ", " + Math.round(treeDist*1000 * 100)/100 +" m"; //(360 - phase | 0) + "°";
 
       // apply rotation to compass rose

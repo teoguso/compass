@@ -563,7 +563,14 @@ url: 'https://trees.codefor.de/api/trees/closest/',
   
   function navEvent() {
     var view = document.getElementById('navEvent').style.visibility;
-    document.getElementById('navEvent').style.visibility = view == "visible" ? "hidden" : "visible";
+    if(view = "hidden") {
+      document.getElementById('navEvent').style.visibility = "visible";
+      document.getElementById('squirrelSound').play();
+    }
+    else {      
+      document.getElementById('navEvent').style.visibility = "hidden";
+      document.getElementById('squirrelSound').stop();
+    }
   }
 
   window.addEventListener("deviceorientation", onHeadingChange);

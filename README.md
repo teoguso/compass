@@ -1,8 +1,12 @@
-# Compass
+# TreeFinder
 
-A simple HTML5 [compass web app](https://lamplightdev.github.io/compass) that's offline capable.
+A simple HTML5 compass web app for squirrels that's offline capable.
 
 Makes use of the HTML5 Location, Device Orientation, Screen Orientation, Screen Lock and Fullscreen APIs.
+
+"Nut Job" team at the Science Hack Day Berlin 2019.
+
+See [https://github.com/Liptoon/eichhoernchen-shdb2019]()
 
 ## Browser support
 

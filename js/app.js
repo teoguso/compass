@@ -27,7 +27,7 @@ url: 'https://trees.codefor.de/api/trees/closest/',
   var debug = false;
   
   //set true for presentation mode
-  var demo = true;
+  var demo = false;
 
   // our current position
   var positionCurrent = {

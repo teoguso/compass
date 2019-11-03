@@ -38,6 +38,7 @@ url: 'https://trees.codefor.de/api/trees/closest/',
 
   const store = {
     treeId: null,
+    species: null,
     latCT: null,
     lonCT: null,
     heading: 0,
@@ -184,7 +185,7 @@ url: 'https://trees.codefor.de/api/trees/closest/',
   
   async function findClosestTree(lat, lon) {
     // alert("trying for "+'https://trees.codefor.de/api/trees/closest/?point=' + positionCurrent.lng + "," + positionCurrent.lat);  
-    const response = await fetch('https://trees.codefor.de/api/trees/closest/?point=' + lon + "," + lat)
+    const response = await fetch('https://trees.codefor.de/api/trees/dist=500?point=' + lon + "," + lat)
     // .then(function(response) {
     if (!response.ok) {
       throw new Error('konnte nicht geladen werden');
@@ -204,8 +205,9 @@ url: 'https://trees.codefor.de/api/trees/closest/',
     //const treeId = jdata.id
     const [lonCT, latCT] = jdata.geometry.coordinates  // ["geometry"]["coordinates"]
     const treeId = jdata.properties.location_number
+    const treeType = jdata.properties.species_german
     // alert(lonCT)
-    return [treeId, lonCT, latCT]
+    return [treeId, lonCT, latCT, treeType]
   }
 
   // called on device orientation change
@@ -476,6 +478,7 @@ url: 'https://trees.codefor.de/api/trees/closest/',
         store.treeId = newTree[0]
         store.lonCT = newTree[1]
         store.latCT = newTree[2]
+        store. = newTree[3]
         
         store.currentLat = store.latCT;
         store.currentLon = store.lonCT;

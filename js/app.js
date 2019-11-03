@@ -25,6 +25,9 @@ url: 'https://trees.codefor.de/api/trees/closest/',
 
   //set to true for debugging output
   var debug = false;
+  
+  //set true for presentation mode
+  var demo = true;
 
   // our current position
   var positionCurrent = {
@@ -39,6 +42,8 @@ url: 'https://trees.codefor.de/api/trees/closest/',
     lonCT: null,
     heading: 0,
     northOffset: 0,
+    currentLat: null,
+    currentLon: null,
   }
 
   // the outer part of the compass that rotates
@@ -177,9 +182,9 @@ url: 'https://trees.codefor.de/api/trees/closest/',
     }
   }
   
-  async function findClosestTree() {
+  async function findClosestTree(lat, lon) {
     // alert("trying for "+'https://trees.codefor.de/api/trees/closest/?point=' + positionCurrent.lng + "," + positionCurrent.lat);  
-    const response = await fetch('https://trees.codefor.de/api/trees/closest/?point=' + positionCurrent.lng + "," + positionCurrent.lat)
+    const response = await fetch('https://trees.codefor.de/api/trees/closest/?point=' + lon + "," + lat)
     // .then(function(response) {
     if (!response.ok) {
       throw new Error('konnte nicht geladen werden');
@@ -462,10 +467,20 @@ url: 'https://trees.codefor.de/api/trees/closest/',
   }
 
   async function toggleNightmode() {
-    const newTree = await findClosestTree();
-    store.treeId = newTree[0]
-    store.lonCT = newTree[1]
-    store.latCT = newTree[2]
+    if(demo) {
+      // set current position ot useres GPS coordinates at beginning
+      if ((store.currentLat === null) || (store.currentLon === null)) {
+        store.currentLat = positionCurrent.lat;
+        store.currentLon = positionCurrent.lon;
+      }
+      // now move by 
+    }
+    else {
+      const newTree = await findClosestTree(positionCurrent.lat, positionCurrent.lng);
+      store.treeId = newTree[0]
+      store.lonCT = newTree[1]
+      store.latCT = newTree[2]
+    }
     //setNightmode(!isNightMode);
   }
 

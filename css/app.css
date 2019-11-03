@@ -126,9 +126,11 @@ header {
   width:35%;
   height:25%;
   /*border:1px solid black;*/
+  padding: 15px;
   overflow:hidden;
 }
 #navEvent img {
+  background-color: rgba(127, 127, 127, 0.25);
   width: 75%;
   height: 75%;
 }

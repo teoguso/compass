@@ -185,7 +185,7 @@ url: 'https://trees.codefor.de/api/trees/closest/',
   
   async function findClosestTree(lat, lon) {
     // alert("trying for "+'https://trees.codefor.de/api/trees/closest/?point=' + positionCurrent.lng + "," + positionCurrent.lat);  
-    const response = await fetch('https://trees.codefor.de/api/trees/dist=500?point=' + lon + "," + lat)
+    const response = await fetch('https://trees.codefor.de/api/trees/closest/?point=' + lon + "," + lat)
     // .then(function(response) {
     if (!response.ok) {
       throw new Error('konnte nicht geladen werden');
@@ -202,7 +202,7 @@ url: 'https://trees.codefor.de/api/trees/closest/',
     // alert(await response.json())
     const jdata = await response.json()
     // alert(jdata)
-    //const treeId = jdata.id
+    // const treeId = jdata.id
     const [lonCT, latCT] = jdata.geometry.coordinates  // ["geometry"]["coordinates"]
     const treeId = jdata.properties.location_number
     const treeType = jdata.properties.species_german
@@ -320,7 +320,7 @@ url: 'https://trees.codefor.de/api/trees/closest/',
       
       var phase = positionCurrent.hng < 0 ? 360 + positionCurrent.hng : positionCurrent.hng;
       // text output for "HDG"
-      positionHng.textContent = store.treeId + ", " + Math.round(treeDist*1000 * 100)/100 +" m"+ ", " + store.currentLat + ", " + store.currentLon;
+      positionHng.textContent = store.species + ", " + Math.round(treeDist*1000 * 100)/100 +" m"+ ", " + store.currentLat + ", " + store.currentLon;
       //store.treeId + ", " + store.latCT  + ", " +Math.round(treeAngle*100000)/100000 +"°" + ", " + Math.round(treeDist*1000 * 100)/100 +" m"; //(360 - phase | 0) + "°";
 
       // apply rotation to compass rose
@@ -478,7 +478,7 @@ url: 'https://trees.codefor.de/api/trees/closest/',
         store.treeId = newTree[0]
         store.lonCT = newTree[1]
         store.latCT = newTree[2]
-        store. = newTree[3]
+        store.species = newTree[3]
         
         store.currentLat = store.latCT;
         store.currentLon = store.lonCT;
@@ -496,6 +496,7 @@ url: 'https://trees.codefor.de/api/trees/closest/',
         store.treeId = newTree[0]
         store.lonCT = newTree[1]
         store.latCT = newTree[2]
+        store.species = newTree[3]
       }
     }
     else {
@@ -503,6 +504,7 @@ url: 'https://trees.codefor.de/api/trees/closest/',
       store.treeId = newTree[0]
       store.lonCT = newTree[1]
       store.latCT = newTree[2]
+      store.species = newTree[3]
     }
     //setNightmode(!isNightMode);
   }

@@ -560,6 +560,11 @@ url: 'https://trees.codefor.de/api/trees/closest/',
   if (debug) {
     debugOrientationDefault.textContent = defaultOrientation;
   }
+  
+  function navEvent() {
+    var view = document.getElementById('navEvent').style.visibility;
+    document.getElementById('navEvent').style.visibility = view == "visible" ? "hidden" : "visible";
+  }
 
   window.addEventListener("deviceorientation", onHeadingChange);
 
@@ -572,6 +577,9 @@ url: 'https://trees.codefor.de/api/trees/closest/',
   btnNightmode.addEventListener("click", startRoute);
   btnMap.addEventListener("click", openMap);
 
+  btnInfo.addEventListener("click", navEvent);
+  
+  /*
   var i;
   for (i=0; i<btnsPopup.length; i++) {
     btnsPopup[i].addEventListener("click", popupOpenFromClick);
@@ -579,7 +587,8 @@ url: 'https://trees.codefor.de/api/trees/closest/',
 
   popup.addEventListener("click", popupClose);
   popupContents.addEventListener("click", popupContentsClick);
-
+*/
+  
   navigator.geolocation.watchPosition(locationUpdate, locationUpdateFail, {
     enableHighAccuracy: false,
     maximumAge: 30000,

@@ -311,9 +311,15 @@ url: 'https://trees.codefor.de/api/trees/closest/',
         store.lonCT = positionCurrent.lng
       }
       
-      let treeAngle = angleAtoB(positionCurrent.lat, positionCurrent.lng, store.latCT, store.lonCT);
       
-      let treeDist = distance(positionCurrent.lat, positionCurrent.lng, store.latCT, store.lonCT, "K");
+     /* if(demo) {
+            let treeAngle = angleAtoB(store.currentLat, positionCurrent.lng, store.latCT, store.lonCT);
+            let treeDist = distance(positionCurrent.lat, positionCurrent.lng, store.latCT, store.lonCT, "K");
+      }
+      else {*/
+            let treeAngle = angleAtoB(positionCurrent.lat, positionCurrent.lng, store.latCT, store.lonCT);
+            let treeDist = distance(positionCurrent.lat, positionCurrent.lng, store.latCT, store.lonCT, "K");
+      //}
       
       var nextTreeHeading = positionCurrent.hng + treeAngle;
       nextTreeHeading = nextTreeHeading < 0 ? 360 + nextTreeHeading : nextTreeHeading;

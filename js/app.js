@@ -481,12 +481,12 @@ url: 'https://trees.codefor.de/api/trees/closest/',
         store.currentLon = store.lonCT;
       }
       else {
-        // now move position by 18.5 meters North-West from prvious tree
+        // now move position by 18.5 meters Northvand ~18.5m West from prvious tree
         //  every time this function is called
-        var move = 1 / 60 / 100 / 2; // 1 angle minute equals 1852 m
+        var move = 1 / 60 / 100; // 1 angle minute equals 1852 m
 
         store.currentLat = store.currentLat + move;
-        store.currentLon = store.currentLat - move;  // going westwards means subtracting on eastern hemisphere
+        store.currentLon = store.currentLon - move;  // going westwards means subtracting on eastern hemisphere
       
         //Now find new tree from these coordinates
         const newTree = await findClosestTree(store.currentLat, store.currentLon);

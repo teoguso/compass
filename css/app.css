@@ -118,6 +118,19 @@ header {
 
 
 
+.navEvent {
+  visibility:visible;
+  position:absolute;
+  top:0;
+  right:0;
+  width:35%;
+  height:25%;
+  border:1px solid black;
+  overflow:hidden;
+}
+.navEvent img {
+  
+}
 
 
 .btn {
